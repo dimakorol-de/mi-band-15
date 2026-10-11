@@ -1,0 +1,26 @@
+name: Build Mi Band App
+on: [push, workflow_dispatch]
+
+jobs:
+  build-rpk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+
+      - name: Install Compiler
+        run: npm install -g hap-tools
+
+      - name: Compile RPK
+        run: hap compile
+
+      - name: Upload Finished App
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-15-game
+          path: dist/*.rpk
